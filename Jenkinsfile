@@ -2,32 +2,47 @@ pipeline {
     agent any  
 
     tools {
-        jdk 'JDK17'   // name must match Jenkins config
+        gradle 'Gradle'  
+        jdk 'JDK'
     }
-
     stages {
-        stage('Setup') {
+        stage('Checkout') {
             steps {
-                sh 'chmod +x gradlew'
+                git branch: 'main', url: 'https://github.com/VishnuPrakash1007/gradle_test.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh 'gradle build'  
             }
         }
 
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'  
             }
         }
+
         
+        
+       
         stage('Run Application') {
             steps {
-                sh './gradlew run'
+                
+                sh 'gradle run'
             }
+        }
+
+        
+    }
+
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
