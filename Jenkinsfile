@@ -1,12 +1,6 @@
-jenkins file
-
 pipeline {
     agent any  
 
-    tools {
-        gradle 'Gradle'  
-        jdk 'JDK'
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -16,27 +10,26 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'gradle build'  
+                sh './gradlew build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'gradle test'  
+                sh './gradlew test'
             }
         }
         
         stage('Run Application') {
             steps {
-                sh 'gradle run'
+                sh './gradlew run'
             }
         }
-        
     }
 
     post {
         success {
-            echo 'Build and deployment successful!'
+            echo 'Build and execution successful!'
         }
         failure {
             echo 'Build failed!'
